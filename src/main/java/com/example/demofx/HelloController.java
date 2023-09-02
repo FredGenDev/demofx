@@ -1,8 +1,14 @@
 package com.example.demofx;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
+import org.controlsfx.control.ToggleSwitch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +21,15 @@ public class HelloController {
 
     @FXML
     private TableView<Participant> tvParticipants;
+
+    @FXML
+    private TableColumn<Participant, UUID> colUuid;
+
+    @FXML
+    private TableColumn<Participant, String> colName;
+
+    @FXML
+    private TableColumn<Participant, Boolean> colPresent;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -35,6 +50,17 @@ public class HelloController {
         participants.add(p3);
 
         tvParticipants.getItems().setAll(participants);
+
+        colPresent.setCellFactory(col -> {
+            TableCell<Participant, Boolean> cell = new TableCell<>();
+            cell.itemProperty().addListener((obs, old, newVal) -> {
+                if (newVal != null) {
+                    Node centreBox = createPriorityGraphic(newVal);
+                    cell.graphicProperty().bind(Bindings.when(cell.emptyProperty()).then((Node) null).otherwise(centreBox));
+                }
+            });
+            return cell;
+        });
     }
 
     private void showTextIfTrue(){
@@ -44,5 +70,12 @@ public class HelloController {
         } else {
             welcomeText.setText("");
         }
+    }
+
+    private Node createPriorityGraphic(Boolean toggleSwitchState){
+        HBox graphicContainer = new HBox();
+        ToggleSwitch toggleSwitch = new ToggleSwitch();
+        graphicContainer.getChildren().add(toggleSwitch);
+        return graphicContainer;
     }
 }

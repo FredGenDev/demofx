@@ -16,13 +16,13 @@
     <Button onAction="#onHelloButtonClick" text="Hello!" />
    <TableView prefHeight="200.0" prefWidth="200.0" fx:id="tvParticipants">
      <columns>
-       <TableColumn prefWidth="75.0" text="C1">
+       <TableColumn fx:id="colUuid" prefWidth="75.0" text="C1">
            <cellValueFactory><PropertyValueFactory property= "uuid"/></cellValueFactory>
        </TableColumn>
-       <TableColumn prefWidth="75.0" text="C2">
+       <TableColumn fx:id="colName" prefWidth="75.0" text="C2">
            <cellValueFactory><PropertyValueFactory property= "name"/></cellValueFactory>
        </TableColumn>
-         <TableColumn prefWidth="75.0" text="C3">
+         <TableColumn fx:id="colPresent" prefWidth="75.0" text="C3">
              <cellValueFactory><PropertyValueFactory property= "present"/></cellValueFactory>
          </TableColumn>
      </columns>
