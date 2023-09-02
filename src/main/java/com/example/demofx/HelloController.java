@@ -1,6 +1,8 @@
 package com.example.demofx;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -43,7 +45,7 @@ public class HelloController {
     @FXML
     public void initialize() {
         Participant p1 = new Participant(UUID.randomUUID(),"Riri", true);
-        Participant p2= new Participant(UUID.randomUUID(),"Fifi", true);
+        Participant p2= new Participant(UUID.randomUUID(),"Fifi", false);
         Participant p3 = new Participant(UUID.randomUUID(),"Loulou", true);
         participants.add(p1);
         participants.add(p2);
@@ -75,6 +77,12 @@ public class HelloController {
     private Node createPriorityGraphic(Boolean toggleSwitchState){
         HBox graphicContainer = new HBox();
         ToggleSwitch toggleSwitch = new ToggleSwitch();
+        toggleSwitch.setSelected(toggleSwitchState);
+        toggleSwitch.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue ov, Boolean old_val, Boolean new_val) {
+                welcomeText.setText(String.valueOf(new_val));
+            }
+        });
         graphicContainer.getChildren().add(toggleSwitch);
         return graphicContainer;
     }
